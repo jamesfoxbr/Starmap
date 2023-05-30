@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://b3ssti6dvbpr7"]
+[gd_scene load_steps=7 format=3 uid="uid://b3ssti6dvbpr7"]
 
 [ext_resource type="Texture2D" uid="uid://c0qc02mpx5opd" path="res://sprites/Stars.png" id="1_4aluo"]
 [ext_resource type="Script" path="res://scripts/starmap.gd" id="1_lu80u"]
+[ext_resource type="PackedScene" uid="uid://dhaqg6yfotdr0" path="res://scenes/ui.tscn" id="4_5su1y"]
 [ext_resource type="Script" path="res://scripts/Camera.gd" id="5_npai1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hd1a0"]
@@ -78,6 +79,9 @@ sources/0 = SubResource("TileSetAtlasSource_hd1a0")
 
 [node name="Starmap" type="Node2D"]
 script = ExtResource("1_lu80u")
+grid_size = 51
+map_screen_align_x = -994
+map_screen_align_y = -635
 
 [node name="StarGrid" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_b02yl")
@@ -85,6 +89,8 @@ cell_quadrant_size = 32
 format = 2
 
 [node name="MainCamera" type="Camera2D" parent="."]
-position = Vector2(802, 446)
+position = Vector2(50000, 0)
 scale = Vector2(0.2, 0.2)
 script = ExtResource("5_npai1")
+
+[node name="UI" parent="." instance=ExtResource("4_5su1y")]
