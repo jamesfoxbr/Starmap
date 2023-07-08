@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://b7kxbr8rvmcyr"]
+
+[ext_resource type="PackedScene" uid="uid://dbuthhi0lm7sl" path="res://scenes/star_grid.tscn" id="2_1rfar"]
+[ext_resource type="Script" path="res://scripts/HexGridScript.gd" id="2_7kai0"]
+[ext_resource type="Script" path="res://scripts/MainCamera.gd" id="4_gql0c"]
+[ext_resource type="PackedScene" uid="uid://dhaqg6yfotdr0" path="res://scenes/ui.tscn" id="4_w6d76"]
+
+[node name="HexMap" type="Node2D"]
+script = ExtResource("2_7kai0")
+
+[node name="StarGrid" parent="." instance=ExtResource("2_1rfar")]
+layer_1/name = ""
+layer_1/enabled = true
+layer_1/modulate = Color(1, 1, 1, 1)
+layer_1/y_sort_enabled = false
+layer_1/y_sort_origin = 0
+layer_1/z_index = 0
+layer_1/tile_data = PackedInt32Array()
+
+[node name="UI" parent="." instance=ExtResource("4_w6d76")]
+
+[node name="MainCamera" type="Camera2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(800, 457)
+zoom = Vector2(3, 3)
+script = ExtResource("4_gql0c")
+
+[node name="TimerRefresh" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[connection signal="timeout" from="TimerRefresh" to="." method="_on_timer_refresh_timeout"]

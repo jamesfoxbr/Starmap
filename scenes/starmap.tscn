@@ -1,79 +1,23 @@
 [gd_scene load_steps=7 format=3 uid="uid://b3ssti6dvbpr7"]
 
-[ext_resource type="Texture2D" uid="uid://c0qc02mpx5opd" path="res://sprites/Stars.png" id="1_4aluo"]
 [ext_resource type="Script" path="res://scripts/starmap.gd" id="1_lu80u"]
+[ext_resource type="Texture2D" uid="uid://dqm8nv6t782qp" path="res://sprites/StarsHex.png" id="2_djv7g"]
 [ext_resource type="PackedScene" uid="uid://dhaqg6yfotdr0" path="res://scenes/ui.tscn" id="4_5su1y"]
 [ext_resource type="Script" path="res://scripts/Camera.gd" id="5_npai1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hd1a0"]
-texture = ExtResource("1_4aluo")
+texture = ExtResource("2_djv7g")
 texture_region_size = Vector2i(32, 32)
-0:0/0 = 0
-1:0/0 = 0
 2:0/0 = 0
+1:0/0 = 0
+0:0/0 = 0
 3:0/0 = 0
 4:0/0 = 0
-5:0/0 = 0
 6:0/0 = 0
-7:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
-2:1/0 = 0
-3:1/0 = 0
-4:1/0 = 0
-5:1/0 = 0
-6:1/0 = 0
-7:1/0 = 0
-0:2/0 = 0
-1:2/0 = 0
-2:2/0 = 0
-3:2/0 = 0
-4:2/0 = 0
-5:2/0 = 0
-6:2/0 = 0
-7:2/0 = 0
-0:3/0 = 0
-1:3/0 = 0
-2:3/0 = 0
-3:3/0 = 0
-4:3/0 = 0
-5:3/0 = 0
-6:3/0 = 0
-7:3/0 = 0
-0:4/0 = 0
-1:4/0 = 0
-2:4/0 = 0
-3:4/0 = 0
-4:4/0 = 0
-5:4/0 = 0
-6:4/0 = 0
-7:4/0 = 0
-0:5/0 = 0
-1:5/0 = 0
-2:5/0 = 0
-3:5/0 = 0
-4:5/0 = 0
-5:5/0 = 0
-6:5/0 = 0
-7:5/0 = 0
-0:6/0 = 0
-1:6/0 = 0
-2:6/0 = 0
-3:6/0 = 0
-4:6/0 = 0
-5:6/0 = 0
-6:6/0 = 0
-7:6/0 = 0
-0:7/0 = 0
-1:7/0 = 0
-2:7/0 = 0
-3:7/0 = 0
-4:7/0 = 0
-5:7/0 = 0
-6:7/0 = 0
-7:7/0 = 0
+5:0/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_b02yl"]
+tile_offset_axis = 1
 tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_hd1a0")
 
@@ -89,7 +33,6 @@ cell_quadrant_size = 32
 format = 2
 
 [node name="MainCamera" type="Camera2D" parent="."]
-position = Vector2(50000, 0)
 scale = Vector2(0.2, 0.2)
 script = ExtResource("5_npai1")
 
