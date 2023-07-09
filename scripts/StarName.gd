@@ -15,7 +15,6 @@ func rand100():
 
 
 func star_name_generator():
-	
 	text = generate_name(false) + " " + generate_name(true)
 
 
