@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dhaqg6yfotdr0"]
+[gd_scene load_steps=5 format=3 uid="uid://dhaqg6yfotdr0"]
 
 [ext_resource type="Script" path="res://scripts/ui.gd" id="1_hcgr5"]
+[ext_resource type="Script" path="res://scripts/FPS.gd" id="2_cexwr"]
 
 [sub_resource type="SystemFont" id="SystemFont_67e08"]
 subpixel_positioning = 0
@@ -56,9 +57,19 @@ offset_top = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_0bngh")
-text = "Y:"
+text = "X:  Y:"
 
 [node name="ColorRect2" type="ColorRect" parent="Control/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 color = Color(0.054902, 0.0666667, 0.301961, 1)
+
+[node name="FPS" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = -1278.0
+offset_top = 15.0
+offset_right = -994.0
+offset_bottom = 70.0
+theme_override_font_sizes/font_size = 30
+text = "FPS"
+script = ExtResource("2_cexwr")

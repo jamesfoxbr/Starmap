@@ -6,8 +6,8 @@ var x: String
 @onready var UI = $Control/VBoxContainer/ColorRect/Coordinates/Y
 
 func _process(delta):
-	UI.text = "Y: " + y + "   X: " + x
+	UI.text = "   X: " + x + "  Y: " + y
 
-func coordinates(coord_x, coord_y):
-	y = str(floor(coord_y))
-	x = str(floor(coord_x))
+func coordinates(coord):
+	y = str(floor(coord.y))
+	x = str(floor(coord.x))

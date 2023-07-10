@@ -9,8 +9,7 @@
 script = ExtResource("2_7kai0")
 
 [node name="StarGrid" parent="." instance=ExtResource("2_1rfar")]
-position = Vector2(0, -20)
-layer_0/tile_data = PackedInt32Array()
+position = Vector2(-3000, -3000)
 layer_1/name = ""
 layer_1/enabled = true
 layer_1/modulate = Color(1, 1, 1, 1)
@@ -18,10 +17,12 @@ layer_1/y_sort_enabled = false
 layer_1/y_sort_origin = 0
 layer_1/z_index = 0
 layer_1/tile_data = PackedInt32Array()
-grid_size = 14
 
 [node name="UI" parent="." instance=ExtResource("4_w6d76")]
 
 [node name="MainCamera" type="Camera2D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("4_gql0c")
+zoom_increment = 0.2
+zoom_current = 1.0
+zoom_target = 0.2

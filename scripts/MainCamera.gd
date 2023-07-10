@@ -21,9 +21,9 @@ func _process(delta):
 
 	zoom_current = lerp(zoom_current, zoom_target, zoom_increment * delta * 20)
 
-	if zoom_current < 0.5:	# control maximum zoom
-		zoom_current = 0.5
-	if zoom_current > 4:	# control minimum zoom
-		zoom_current = 4
+	if zoom_current < 0.1:	# control maximum zoom
+		zoom_current = 0.1
+	if zoom_current > 2:	# control minimum zoom
+		zoom_current = 2
 
 	set_zoom(Vector2(zoom_current, zoom_current))
