@@ -1,15 +1,54 @@
-[gd_scene load_steps=5 format=3 uid="uid://b7kxbr8rvmcyr"]
+[gd_scene load_steps=14 format=3 uid="uid://b7kxbr8rvmcyr"]
 
-[ext_resource type="PackedScene" uid="uid://dbuthhi0lm7sl" path="res://scenes/star_grid.tscn" id="2_1rfar"]
 [ext_resource type="Script" path="res://scripts/HexGridScript.gd" id="2_7kai0"]
+[ext_resource type="Texture2D" uid="uid://dqm8nv6t782qp" path="res://sprites/StarsHex.png" id="2_ikv5k"]
+[ext_resource type="Script" path="res://scripts/ui.gd" id="3_ofxti"]
+[ext_resource type="Script" path="res://scripts/star_grid.gd" id="3_up45h"]
+[ext_resource type="Script" path="res://scripts/Grid.gd" id="4_33mof"]
 [ext_resource type="Script" path="res://scripts/MainCamera.gd" id="4_gql0c"]
-[ext_resource type="PackedScene" uid="uid://dhaqg6yfotdr0" path="res://scenes/ui.tscn" id="4_w6d76"]
+[ext_resource type="Script" path="res://scripts/FPS.gd" id="4_v7awf"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2lylm"]
+texture = ExtResource("2_ikv5k")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+
+[sub_resource type="TileSet" id="TileSet_byslw"]
+tile_shape = 3
+tile_offset_axis = 1
+tile_size = Vector2i(384, 328)
+physics_layer_0/collision_layer = 1
+custom_data_layer_0/name = "star"
+custom_data_layer_0/type = 1
+sources/0 = SubResource("TileSetAtlasSource_2lylm")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_n2088"]
+noise_type = 0
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_c3y5i"]
+width = 1024
+height = 1024
+invert = true
+noise = SubResource("FastNoiseLite_n2088")
+
+[sub_resource type="SystemFont" id="SystemFont_67e08"]
+subpixel_positioning = 0
+
+[sub_resource type="Theme" id="Theme_0bngh"]
+default_font = SubResource("SystemFont_67e08")
 
 [node name="HexMap" type="Node2D"]
 script = ExtResource("2_7kai0")
 
-[node name="StarGrid" parent="." instance=ExtResource("2_1rfar")]
+[node name="Grid" type="TileMap" parent="."]
+show_behind_parent = true
+z_index = 2
 position = Vector2(-3000, -3000)
+tile_set = SubResource("TileSet_byslw")
+format = 2
 layer_1/name = ""
 layer_1/enabled = true
 layer_1/modulate = Color(1, 1, 1, 1)
@@ -17,12 +56,93 @@ layer_1/y_sort_enabled = false
 layer_1/y_sort_origin = 0
 layer_1/z_index = 0
 layer_1/tile_data = PackedInt32Array()
+script = ExtResource("4_33mof")
 
-[node name="UI" parent="." instance=ExtResource("4_w6d76")]
+[node name="GenerateStars" type="TileMap" parent="."]
+z_index = 2
+position = Vector2(-3000, -3000)
+tile_set = SubResource("TileSet_byslw")
+format = 2
+layer_1/name = ""
+layer_1/enabled = true
+layer_1/modulate = Color(1, 1, 1, 1)
+layer_1/y_sort_enabled = false
+layer_1/y_sort_origin = 0
+layer_1/z_index = 0
+layer_1/tile_data = PackedInt32Array()
+script = ExtResource("3_up45h")
+random = 0.1
+
+[node name="Noise" type="Sprite2D" parent="GenerateStars"]
+visible = false
+position = Vector2(3000, 3000)
+texture = SubResource("NoiseTexture2D_c3y5i")
+
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource("3_ofxti")
+
+[node name="Control" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1293.0
+offset_right = -0.145996
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 5.146
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="ColorRect" type="ColorRect" parent="UI/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+color = Color(0.00784314, 0.164706, 0.196078, 1)
+
+[node name="Coordinates" type="RichTextLabel" parent="UI/Control/VBoxContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_0bngh")
+text = "COORDINATES"
+
+[node name="Y" type="RichTextLabel" parent="UI/Control/VBoxContainer/ColorRect/Coordinates"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_0bngh")
+text = "X:  Y:"
+
+[node name="ColorRect2" type="ColorRect" parent="UI/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0.054902, 0.0666667, 0.301961, 1)
+
+[node name="FPS" type="Label" parent="UI/Control"]
+layout_mode = 0
+offset_left = -1278.0
+offset_top = 15.0
+offset_right = -994.0
+offset_bottom = 70.0
+theme_override_font_sizes/font_size = 30
+text = "FPS"
+script = ExtResource("4_v7awf")
 
 [node name="MainCamera" type="Camera2D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("4_gql0c")
-zoom_increment = 0.2
-zoom_current = 1.0
-zoom_target = 0.2

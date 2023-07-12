@@ -23,7 +23,10 @@ window/stretch/mode="canvas_items"
 
 [editor]
 
+movie_writer/mjpeg_quality=0.66
 movie_writer/movie_file="D:/Users/Onedrive/Documentos/Game Dev/Godot/movie.avi"
+movie_writer/disable_vsync=true
+movie_writer/fps=24
 
 [input]
 

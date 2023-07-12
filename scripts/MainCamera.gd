@@ -1,9 +1,9 @@
 extends Camera2D
 
-@export var zoom_increment: float = 0.5
-@export var zoom_current: float = 0.5 
-@export var zoom_target: float = 0.5
-@export var zoom_speed: float = 20
+@export var zoom_increment: float = 0.2
+@export var zoom_current: float = 1
+@export var zoom_target: float = 0.2
+@export var zoom_speed: float = 5
 
 
 func  _unhandled_input(event):

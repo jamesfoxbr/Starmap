@@ -1,9 +1,8 @@
 extends Node2D
 
-@onready var stars: PackedScene = load("res://scenes/stars.tscn")
-@onready var star_grid = load("res://scenes/star_grid.tscn")
 @onready var camera = $MainCamera
-@onready var stargrid = $StarGrid
+@onready var GenerateStars = $GenerateStars
+@onready var grid = $Grid
 @onready var UI = $UI
 
 signal camera_position(camx, camy)
@@ -24,7 +23,8 @@ func _process(delta):
 
 
 func send_camera_position():
-	stargrid.camera_coord(camera_pos_x, camera_pos_y)
+	GenerateStars.camera_coord(camera_pos_x, camera_pos_y)
+	grid.camera_coord(camera_pos_x, camera_pos_y)
 
 
 func keyboard():
