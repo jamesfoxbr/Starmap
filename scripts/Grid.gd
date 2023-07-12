@@ -1,9 +1,7 @@
 extends TileMap
 
 @onready var UI = $"../UI"
-@onready var grid = $Grid
 @onready var camera = get_parent().get_node("MainCamera")
-@onready var subsector_names = $"../SubsectorNames"
 
 var tile_position: Vector2
 
@@ -37,6 +35,8 @@ var cam_x: int
 var cam_y: int
 var cam_zoom: float
 
+var draw_cooldown: bool = true
+
 ################################################################################
 # Draw hex grid lines variables
 ################################################################################
@@ -59,13 +59,17 @@ func _ready():
 
 @warning_ignore("unused_parameter")
 func _process(delta):
-	if last_cam_pos != Vector2i(cam_x,cam_y):
+	if last_cam_pos != Vector2i(cam_x,cam_y) and draw_cooldown == true:
+		draw_cooldown = false
 		queue_redraw()
 		last_cam_pos = Vector2i(cam_x,cam_y)
+		await get_tree().create_timer(0.11).timeout
+		draw_cooldown = true
 
 
 func procedural_seed(my_seed, i, j):
-	seed(((cam_x + i) * (cam_x + i) * (cam_x + i) + (cam_y + j) * (cam_y + j) + (cam_x + i) * (cam_y + j)))
+	seed(((cam_x + i) * (cam_x + i) * (cam_x + i) + 
+	(cam_y + j) * (cam_y + j) + (cam_x + i) * (cam_y + j)) + my_seed)
 
 
 func _draw():
@@ -80,10 +84,8 @@ func _draw():
 					cam_x + i + cells_offset_x, cam_y + j + cells_offset_y
 					)) + star_name_position
 			
-			
 			name_generator_position = local_to_map(Vector2(cam_x + i, cam_y + j))
 			
-			draw_hex_grid(grid_width, grid_color)
 			draw_subsector()
 			draw_sector()
 			subsector_name()
@@ -113,9 +115,9 @@ func draw_subsector():
 
 func subsector_name():
 	if int(tile_position.x) % 8 ==0 and int(tile_position.y) % 10 ==0:
-		var subsector_name = str(sector_name.generate_name()).left(8)
+		var subsector_nam = str(sector_name.generate_name()).left(8)
 		draw_string(
-			font, map_to_local(tile_position) + Vector2(0, -1500), subsector_name, 
+			font, map_to_local(tile_position) + Vector2(0, -1500), subsector_nam, 
 			HORIZONTAL_ALIGNMENT_CENTER, -1, 512, Color.html("#151515"))
 	
 
@@ -136,25 +138,6 @@ func draw_sector():
 		draw_line(map_to_local(tile_position) + Vector2(0, 0),
 		map_to_local(tile_position) + Vector2(150, 0)  * resolution, 
 		grid_color, grid_width + 20, false)
-
-
-func draw_hex_grid(grid_wid, grid_col):
-	# Draw hex grid
-	var hex_points = PackedVector2Array([
-		top_left + map_to_local(tile_position), 
-		middle_left + map_to_local(tile_position), 
-		bottom_left + map_to_local(tile_position),
-		bottom_right + map_to_local(tile_position), 
-		middle_right + map_to_local(tile_position), 
-		top_right + map_to_local(tile_position), 
-		top_left + map_to_local(tile_position)])
-	
-	draw_polyline(hex_points, grid_col, grid_wid)
-
-
-func my_rand(min, max):
-	var random100: int = floor(randf_range(min, max))
-	return random100
 
 
 func camera_coord(cx: float, cy: float,):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b7kxbr8rvmcyr"]
+[gd_scene load_steps=15 format=3 uid="uid://b7kxbr8rvmcyr"]
 
 [ext_resource type="Script" path="res://scripts/HexGridScript.gd" id="2_7kai0"]
 [ext_resource type="Texture2D" uid="uid://dqm8nv6t782qp" path="res://sprites/StarsHex.png" id="2_ikv5k"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/star_grid.gd" id="3_up45h"]
 [ext_resource type="Script" path="res://scripts/Grid.gd" id="4_33mof"]
 [ext_resource type="Script" path="res://scripts/MainCamera.gd" id="4_gql0c"]
+[ext_resource type="Script" path="res://scripts/HexGrid.gd" id="4_hpmh5"]
 [ext_resource type="Script" path="res://scripts/FPS.gd" id="4_v7awf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2lylm"]
@@ -58,6 +59,21 @@ layer_1/z_index = 0
 layer_1/tile_data = PackedInt32Array()
 script = ExtResource("4_33mof")
 
+[node name="HexGrid" type="TileMap" parent="."]
+show_behind_parent = true
+z_index = 2
+position = Vector2(-3000, -3000)
+tile_set = SubResource("TileSet_byslw")
+format = 2
+layer_1/name = ""
+layer_1/enabled = true
+layer_1/modulate = Color(1, 1, 1, 1)
+layer_1/y_sort_enabled = false
+layer_1/y_sort_origin = 0
+layer_1/z_index = 0
+layer_1/tile_data = PackedInt32Array()
+script = ExtResource("4_hpmh5")
+
 [node name="GenerateStars" type="TileMap" parent="."]
 z_index = 2
 position = Vector2(-3000, -3000)
@@ -101,37 +117,22 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 
-[node name="ColorRect" type="ColorRect" parent="UI/Control/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.1
-color = Color(0.00784314, 0.164706, 0.196078, 1)
-
-[node name="Coordinates" type="RichTextLabel" parent="UI/Control/VBoxContainer/ColorRect"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = SubResource("Theme_0bngh")
-text = "COORDINATES"
-
-[node name="Y" type="RichTextLabel" parent="UI/Control/VBoxContainer/ColorRect/Coordinates"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = SubResource("Theme_0bngh")
-text = "X:  Y:"
-
 [node name="ColorRect2" type="ColorRect" parent="UI/Control/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-color = Color(0.054902, 0.0666667, 0.301961, 1)
+color = Color(0.0980392, 0.105882, 0.152941, 1)
+
+[node name="Coordinates" type="RichTextLabel" parent="UI/Control/VBoxContainer/ColorRect2"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 8.0
+offset_top = 5.0
+offset_right = -8.0
+offset_bottom = 29.0
+grow_horizontal = 2
+theme = SubResource("Theme_0bngh")
+text = "X:  Y:"
 
 [node name="FPS" type="Label" parent="UI/Control"]
 layout_mode = 0

@@ -57,6 +57,7 @@ var star_noises2 = FastNoiseLite.new()
 @export var star_frequence2: float = 0.365
 
 @export var random: float = 0.2
+var draw_cooldown: bool = true
 
 
 func _ready():
@@ -64,16 +65,19 @@ func _ready():
 	await get_tree().create_timer(0.1).timeout
 	draw_tile()
 	queue_redraw()
-
+	
 
 @warning_ignore("unused_parameter")
 func _process(delta):
 	noise_settings()
-	if last_cam_pos != Vector2i(cam_x,cam_y):
+	if last_cam_pos != Vector2i(cam_x,cam_y) and draw_cooldown == true:
+		draw_cooldown = false
 		clear()
 		queue_redraw()
 		draw_tile()
 		last_cam_pos = Vector2i(cam_x,cam_y)
+		await get_tree().create_timer(0.111).timeout
+		draw_cooldown = true
 	
 	# Send mouse global position to show tile coornates Y and X in the UI labels.
 	send_map_coord()
@@ -96,7 +100,8 @@ func noise_settings():
 
 
 func procedural_seed(my_seed, i, j):
-	seed(((cam_x + i) * (cam_x + i) * (cam_x + i) + (cam_y + j) * (cam_y + j) + (cam_x + i) * (cam_y + j)))
+	seed(((cam_x + i) * (cam_x + i) * (cam_x + i) + 
+	(cam_y + j) * (cam_y + j) + (cam_x + i) * (cam_y + j)) + my_seed)
 
 
 func _draw():
@@ -110,8 +115,6 @@ func _draw():
 				Vector2(
 					cam_x + i + cells_offset_x, cam_y + j + cells_offset_y
 					)) + star_name_position
-			
-			var star_noise = star_noises.get_noise_2d(tile_position.x, tile_position.y)
 			
 			name_generator_position = local_to_map(Vector2(cam_x + i, cam_y + j))
 			
@@ -131,18 +134,17 @@ func draw_tile():
 			var star_noise = star_noises.get_noise_2d(tile_position.x, tile_position.y)
 			var star_noise2 = star_noises2.get_noise_2d(tile_position.x, tile_position.y)
 			
-			print(get_cell_source_id(0, tile_position))
 			if (abs(star_noise) > star_frequence + randommizing_stars(random) 
 				or abs(star_noise2) > star_frequence2 + randommizing_stars(random)):
 				set_cell(0, tile_position, 0, Vector2(0, 0))
 
 
 func draw_star_names():
-	var hex_name = str(star_names.generate_name()).left(8)
+	var star_name = str(star_names.generate_name()).left(8)
 	draw_string(
-		font, star_name_position_hex, hex_name, HORIZONTAL_ALIGNMENT_CENTER, 
+		font, star_name_position_hex, star_name, HORIZONTAL_ALIGNMENT_CENTER, 
 		star_name_chars * name_width, font_size, Color.WHITE)
-	draw_string_outline(font, star_name_position_hex, hex_name, HORIZONTAL_ALIGNMENT_CENTER, 
+	draw_string_outline(font, star_name_position_hex, star_name, HORIZONTAL_ALIGNMENT_CENTER, 
 		star_name_chars * name_width, font_size, font_border, Color.BLACK)
 
 

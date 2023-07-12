@@ -4,6 +4,7 @@ extends Node2D
 @onready var GenerateStars = $GenerateStars
 @onready var grid = $Grid
 @onready var UI = $UI
+@onready var hex_grid = $HexGrid
 
 signal camera_position(camx, camy)
 
@@ -25,6 +26,7 @@ func _process(delta):
 func send_camera_position():
 	GenerateStars.camera_coord(camera_pos_x, camera_pos_y)
 	grid.camera_coord(camera_pos_x, camera_pos_y)
+	hex_grid.camera_coord(camera_pos_x, camera_pos_y)
 
 
 func keyboard():
