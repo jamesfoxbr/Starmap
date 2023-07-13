@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://bbqf6yv2l3tpb"]
+
+[ext_resource type="Script" path="res://scripts/star.gd" id="1_jd0qx"]
+[ext_resource type="Texture2D" uid="uid://dqm8nv6t782qp" path="res://sprites/StarsHex.png" id="1_mgucm"]
+
+[node name="Star" type="Node2D"]
+script = ExtResource("1_jd0qx")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("1_mgucm")
+region_enabled = true
+region_rect = Rect2(0, 0, 128, 128)
+
+[node name="StarName" type="RichTextLabel" parent="."]
+offset_left = -108.0
+offset_top = 60.0
+offset_right = 289.0
+offset_bottom = 127.0
+theme_override_font_sizes/normal_font_size = 45
+text = "NAME"

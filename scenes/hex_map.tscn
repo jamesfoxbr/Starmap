@@ -1,13 +1,17 @@
 [gd_scene load_steps=15 format=3 uid="uid://b7kxbr8rvmcyr"]
 
-[ext_resource type="Script" path="res://scripts/HexGridScript.gd" id="2_7kai0"]
+[ext_resource type="Script" path="res://scripts/Main.gd" id="1_n7n6h"]
 [ext_resource type="Texture2D" uid="uid://dqm8nv6t782qp" path="res://sprites/StarsHex.png" id="2_ikv5k"]
+[ext_resource type="PackedScene" uid="uid://bbqf6yv2l3tpb" path="res://scenes/star.tscn" id="2_tkky7"]
 [ext_resource type="Script" path="res://scripts/ui.gd" id="3_ofxti"]
-[ext_resource type="Script" path="res://scripts/star_grid.gd" id="3_up45h"]
 [ext_resource type="Script" path="res://scripts/Grid.gd" id="4_33mof"]
 [ext_resource type="Script" path="res://scripts/MainCamera.gd" id="4_gql0c"]
 [ext_resource type="Script" path="res://scripts/HexGrid.gd" id="4_hpmh5"]
 [ext_resource type="Script" path="res://scripts/FPS.gd" id="4_v7awf"]
+[ext_resource type="PackedScene" uid="uid://bafi883yyjud8" path="res://scenes/generate_stars.tscn" id="6_nx7dq"]
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_wnsp3"]
+scenes/0/scene = ExtResource("2_tkky7")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2lylm"]
 texture = ExtResource("2_ikv5k")
@@ -23,17 +27,8 @@ tile_size = Vector2i(384, 328)
 physics_layer_0/collision_layer = 1
 custom_data_layer_0/name = "star"
 custom_data_layer_0/type = 1
-sources/0 = SubResource("TileSetAtlasSource_2lylm")
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_n2088"]
-noise_type = 0
-fractal_type = 2
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_c3y5i"]
-width = 1024
-height = 1024
-invert = true
-noise = SubResource("FastNoiseLite_n2088")
+sources/2 = SubResource("TileSetAtlasSource_2lylm")
+sources/0 = SubResource("TileSetScenesCollectionSource_wnsp3")
 
 [sub_resource type="SystemFont" id="SystemFont_67e08"]
 subpixel_positioning = 0
@@ -41,8 +36,8 @@ subpixel_positioning = 0
 [sub_resource type="Theme" id="Theme_0bngh"]
 default_font = SubResource("SystemFont_67e08")
 
-[node name="HexMap" type="Node2D"]
-script = ExtResource("2_7kai0")
+[node name="Main" type="Node2D"]
+script = ExtResource("1_n7n6h")
 
 [node name="Grid" type="TileMap" parent="."]
 show_behind_parent = true
@@ -74,25 +69,7 @@ layer_1/z_index = 0
 layer_1/tile_data = PackedInt32Array()
 script = ExtResource("4_hpmh5")
 
-[node name="GenerateStars" type="TileMap" parent="."]
-z_index = 2
-position = Vector2(-3000, -3000)
-tile_set = SubResource("TileSet_byslw")
-format = 2
-layer_1/name = ""
-layer_1/enabled = true
-layer_1/modulate = Color(1, 1, 1, 1)
-layer_1/y_sort_enabled = false
-layer_1/y_sort_origin = 0
-layer_1/z_index = 0
-layer_1/tile_data = PackedInt32Array()
-script = ExtResource("3_up45h")
-random = 0.1
-
-[node name="Noise" type="Sprite2D" parent="GenerateStars"]
-visible = false
-position = Vector2(3000, 3000)
-texture = SubResource("NoiseTexture2D_c3y5i")
+[node name="GenerateStars" parent="." instance=ExtResource("6_nx7dq")]
 
 [node name="UI" type="CanvasLayer" parent="."]
 script = ExtResource("3_ofxti")

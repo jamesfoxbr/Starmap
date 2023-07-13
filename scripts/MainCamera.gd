@@ -5,6 +5,7 @@ extends Camera2D
 @export var zoom_target: float = 0.2
 @export var zoom_speed: float = 5
 
+@onready var Generate_stars = $"../GenerateStars"
 
 func  _unhandled_input(event):
 	if event is InputEventMouseMotion:
@@ -27,3 +28,4 @@ func _process(delta):
 		zoom_current = 2
 
 	set_zoom(Vector2(zoom_current, zoom_current))
+	

@@ -38,19 +38,13 @@ const grid_width: int = 10
 var grid_color = Color.html("#303030")
 
 
-var draw_cooldown: bool = true
-
 func _ready():
 	pass # Replace with function body.
 
 
 func _process(delta):
-	if last_cam_pos != Vector2i(cam_x,cam_y) and draw_cooldown == true:
-		draw_cooldown = false
-		queue_redraw()
-		last_cam_pos = Vector2i(cam_x,cam_y)
-		await get_tree().create_timer(0.1).timeout
-		draw_cooldown = true
+	queue_redraw()
+
 
 func _draw():
 	for i in cells_width:

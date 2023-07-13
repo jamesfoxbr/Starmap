@@ -1,5 +1,11 @@
-extends Node
-class_name Star
+extends Node2D
 
-var star_name: String
-var star_coordinate: Vector2
+@onready var nam = Names.new()
+
+func _ready():	
+	seed(position.x + position.y)
+	var star_name = nam.generate_name()
+	$StarName.text = star_name
+	name = star_name
+
+

@@ -35,8 +35,6 @@ var cam_x: int
 var cam_y: int
 var cam_zoom: float
 
-var draw_cooldown: bool = true
-
 ################################################################################
 # Draw hex grid lines variables
 ################################################################################
@@ -59,12 +57,8 @@ func _ready():
 
 @warning_ignore("unused_parameter")
 func _process(delta):
-	if last_cam_pos != Vector2i(cam_x,cam_y) and draw_cooldown == true:
-		draw_cooldown = false
-		queue_redraw()
-		last_cam_pos = Vector2i(cam_x,cam_y)
-		await get_tree().create_timer(0.11).timeout
-		draw_cooldown = true
+	queue_redraw()
+
 
 
 func procedural_seed(my_seed, i, j):
