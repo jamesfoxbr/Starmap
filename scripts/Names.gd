@@ -1,8 +1,10 @@
 class_name Names
 
-var star_name_chars: int = 10
 
-func generate_name():
+
+func generate_name(pos):
+	var star_name_chars: int = 10
+	seed(pos)
 	var char1 = [
 		"b","c","d","f","h","j","l","m","n","p","q","r","s","t","v","x","z","j","k","y",
 		"b","c","d","f","h","j","l","m","n","p","q","r","s","t","v","x","z","j","k","y",

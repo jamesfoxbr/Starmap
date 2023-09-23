@@ -1,33 +1,33 @@
-[gd_scene load_steps=7 format=3 uid="uid://bafi883yyjud8"]
+[gd_scene load_steps=7 format=3 uid="uid://bfwa10y28nd8s"]
 
-[ext_resource type="PackedScene" uid="uid://bbqf6yv2l3tpb" path="res://scenes/star.tscn" id="1_og20g"]
+[ext_resource type="PackedScene" uid="uid://d2y0gq8xvip6x" path="res://scenes/star.tscn" id="1_og20g"]
 [ext_resource type="Texture2D" uid="uid://dqm8nv6t782qp" path="res://sprites/StarsHex.png" id="2_b6kua"]
-[ext_resource type="Script" path="res://scripts/star_grid.gd" id="3_6a7sf"]
+[ext_resource type="Script" path="res://scripts/GenerateStars.gd" id="3_6a7sf"]
 
-[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_wnsp3"]
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_odpu1"]
 scenes/0/scene = ExtResource("1_og20g")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2lylm"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ue3br"]
 texture = ExtResource("2_b6kua")
 texture_region_size = Vector2i(128, 128)
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
 
-[sub_resource type="TileSet" id="TileSet_byslw"]
+[sub_resource type="TileSet" id="TileSet_4xqhi"]
 tile_shape = 3
 tile_offset_axis = 1
 tile_size = Vector2i(384, 328)
 physics_layer_0/collision_layer = 1
 custom_data_layer_0/name = "star"
 custom_data_layer_0/type = 1
-sources/2 = SubResource("TileSetAtlasSource_2lylm")
-sources/0 = SubResource("TileSetScenesCollectionSource_wnsp3")
+sources/2 = SubResource("TileSetAtlasSource_ue3br")
+sources/0 = SubResource("TileSetScenesCollectionSource_odpu1")
 
 [node name="GenerateStars" type="TileMap"]
 z_index = 2
 position = Vector2(-3000, -3000)
-tile_set = SubResource("TileSet_byslw")
+tile_set = SubResource("TileSet_4xqhi")
 format = 2
 layer_1/name = ""
 layer_1/enabled = true

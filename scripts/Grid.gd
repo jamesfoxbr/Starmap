@@ -14,10 +14,7 @@ var resolution = 4
 
 var cells_width: int = 50
 var cells_height: int = 37
-var cells_offset_x: int = -14
-var cells_offset_y: int = -8
 
-var last_cam_pos: Vector2i
 ################################################################################
 # More Variables
 ################################################################################
@@ -60,29 +57,24 @@ func _process(delta):
 	queue_redraw()
 
 
-
 func procedural_seed(my_seed, i, j):
 	seed(((cam_x + i) * (cam_x + i) * (cam_x + i) + 
-	(cam_y + j) * (cam_y + j) + (cam_x + i) * (cam_y + j)) + my_seed)
+	(cam_y + j) * (cam_y + j) + (cam_y + i) * (cam_y + j)) + my_seed)
 
 
 func _draw():
-	for i in cells_width:
-		for j in cells_height:
-			procedural_seed(1, i, j)
+	for x in cells_width:
+		for y in cells_height:
+			procedural_seed(1, x, y)
 			
-			tile_position = Vector2(
-				cam_x + i + cells_offset_x, cam_y + j + cells_offset_y)
-			star_name_position_hex = map_to_local(
-				Vector2(
-					cam_x + i + cells_offset_x, cam_y + j + cells_offset_y
-					)) + star_name_position
+			tile_position = Vector2(cam_x + x, cam_y + y)
+			star_name_position_hex = map_to_local(Vector2(cam_x + x, cam_y + y)) + star_name_position
 			
-			name_generator_position = local_to_map(Vector2(cam_x + i, cam_y + j))
+			name_generator_position = local_to_map(Vector2(cam_x + x, cam_y + y))
 			
 			draw_subsector()
 			draw_sector()
-			subsector_name()
+#			subsector_name((cam_x + x) * (cam_y + y))
 
 
 func draw_subsector():
@@ -107,12 +99,12 @@ func draw_subsector():
 		grid_color, grid_width, false)
 
 
-func subsector_name():
+func subsector_name(xy):
 	if int(tile_position.x) % 8 ==0 and int(tile_position.y) % 10 ==0:
-		var subsector_nam = str(sector_name.generate_name()).left(8)
+		var subsector_nam = str(sector_name.generate_name(xy)).left(8)
 		draw_string(
 			font, map_to_local(tile_position) + Vector2(0, -1500), subsector_nam, 
-			HORIZONTAL_ALIGNMENT_CENTER, -1, 512, Color.html("#151515"))
+			HORIZONTAL_ALIGNMENT_CENTER, -1, 512, Color.html("#222222"))
 	
 
 func draw_sector():

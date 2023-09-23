@@ -1,0 +1,305 @@
+[gd_scene load_steps=20 format=3 uid="uid://b7kxbr8rvmcyr"]
+
+[ext_resource type="Script" path="res://scripts/Main.gd" id="1_ni06f"]
+[ext_resource type="Texture2D" uid="uid://dqm8nv6t782qp" path="res://sprites/StarsHex.png" id="2_1ippe"]
+[ext_resource type="Script" path="res://scripts/Grid.gd" id="3_dku4a"]
+[ext_resource type="Script" path="res://scripts/HexGrid.gd" id="4_a4ehw"]
+[ext_resource type="Script" path="res://scripts/ui.gd" id="7_w41by"]
+[ext_resource type="Script" path="res://scripts/FPS.gd" id="8_oseog"]
+[ext_resource type="Script" path="res://scripts/MainCamera.gd" id="9_2bub4"]
+
+[sub_resource type="GDScript" id="GDScript_jncb6"]
+script/source = "extends Node2D
+
+@onready var nam = Names.new()
+
+################################################################################
+# Draw hex grid lines variables
+################################################################################
+const top_left = Vector2(-96, -160)
+const top_right = Vector2(96, -160)
+const middle_left = Vector2(-192, 0)
+const middle_right = Vector2(192, 0)
+const bottom_left = Vector2(-96, 160)
+const bottom_right = Vector2(96, 160)
+
+const grid_width: int = 10
+var grid_color = Color.html(\"#303030\")
+
+
+func _ready():	
+	@warning_ignore(\"narrowing_conversion\")
+	seed(position.x + position.y)
+	var star_name = nam.generate_name(1)
+	$StarName.text = star_name
+	name = star_name
+	
+#
+#func _draw():
+#	draw_hex_grid(grid_width, grid_color)
+
+
+func draw_hex_grid(grid_wid, grid_col):
+	# Draw hex grid
+	var hex_points = PackedVector2Array([
+		top_left + global_position, 
+		middle_left + global_position, 
+		bottom_left + global_position,
+		bottom_right + global_position, 
+		middle_right + global_position, 
+		top_right + global_position, 
+		top_left + global_position
+		])
+	
+	draw_polyline(hex_points, grid_col, grid_wid)
+"
+
+[sub_resource type="PackedScene" id="PackedScene_ucqf4"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"names": PackedStringArray("Star", "script", "Node2D", "Sprite", "scale", "texture", "region_enabled", "region_rect", "Sprite2D", "StarName", "offset_left", "offset_top", "offset_right", "offset_bottom", "theme_override_font_sizes/normal_font_size", "text", "RichTextLabel"),
+"node_count": 3,
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 2, 0, -1, 1, 1, 0, 0, 0, 0, 8, 3, -1, 4, 4, 1, 5, 2, 6, 3, 7, 4, 0, 0, 0, 16, 9, -1, 6, 10, 5, 11, 6, 12, 7, 13, 8, 14, 9, 15, 10, 0),
+"variants": [SubResource("GDScript_jncb6"), Vector2(1.2, 1.2), ExtResource("2_1ippe"), true, Rect2(0, 0, 128, 128), -108.0, 60.0, 289.0, 127.0, 45, "NAME"],
+"version": 3
+}
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_wnsp3"]
+scenes/0/scene = SubResource("PackedScene_ucqf4")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2lylm"]
+texture = ExtResource("2_1ippe")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+
+[sub_resource type="TileSet" id="TileSet_byslw"]
+tile_shape = 3
+tile_offset_axis = 1
+tile_size = Vector2i(384, 328)
+physics_layer_0/collision_layer = 1
+custom_data_layer_0/name = "star"
+custom_data_layer_0/type = 1
+sources/2 = SubResource("TileSetAtlasSource_2lylm")
+sources/0 = SubResource("TileSetScenesCollectionSource_wnsp3")
+
+[sub_resource type="GDScript" id="GDScript_r0vp7"]
+script/source = "extends Node2D
+
+@onready var nam = Names.new()
+
+################################################################################
+# Draw hex grid lines variables
+################################################################################
+const top_left = Vector2(-96, -160)
+const top_right = Vector2(96, -160)
+const middle_left = Vector2(-192, 0)
+const middle_right = Vector2(192, 0)
+const bottom_left = Vector2(-96, 160)
+const bottom_right = Vector2(96, 160)
+
+const grid_width: int = 10
+var grid_color = Color.html(\"#303030\")
+
+
+func _ready():	
+	@warning_ignore(\"narrowing_conversion\")
+	seed(position.x + position.y)
+	var star_name = nam.generate_name(1)
+	$StarName.text = star_name
+	name = star_name
+	
+#
+#func _draw():
+#	draw_hex_grid(grid_width, grid_color)
+
+
+func draw_hex_grid(grid_wid, grid_col):
+	# Draw hex grid
+	var hex_points = PackedVector2Array([
+		top_left + global_position, 
+		middle_left + global_position, 
+		bottom_left + global_position,
+		bottom_right + global_position, 
+		middle_right + global_position, 
+		top_right + global_position, 
+		top_left + global_position
+		])
+	
+	draw_polyline(hex_points, grid_col, grid_wid)
+"
+
+[sub_resource type="PackedScene" id="PackedScene_eo5oo"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"names": PackedStringArray("Star", "script", "Node2D", "Sprite", "scale", "texture", "region_enabled", "region_rect", "Sprite2D", "StarName", "offset_left", "offset_top", "offset_right", "offset_bottom", "theme_override_font_sizes/normal_font_size", "text", "RichTextLabel"),
+"node_count": 3,
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 2, 0, -1, 1, 1, 0, 0, 0, 0, 8, 3, -1, 4, 4, 1, 5, 2, 6, 3, 7, 4, 0, 0, 0, 16, 9, -1, 6, 10, 5, 11, 6, 12, 7, 13, 8, 14, 9, 15, 10, 0),
+"variants": [SubResource("GDScript_r0vp7"), Vector2(1.2, 1.2), ExtResource("2_1ippe"), true, Rect2(0, 0, 128, 128), -108.0, 60.0, 289.0, 127.0, 45, "NAME"],
+"version": 3
+}
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_odpu1"]
+scenes/0/scene = SubResource("PackedScene_eo5oo")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ue3br"]
+texture = ExtResource("2_1ippe")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+
+[sub_resource type="TileSet" id="TileSet_4xqhi"]
+tile_shape = 3
+tile_offset_axis = 1
+tile_size = Vector2i(384, 328)
+physics_layer_0/collision_layer = 1
+custom_data_layer_0/name = "star"
+custom_data_layer_0/type = 1
+sources/2 = SubResource("TileSetAtlasSource_ue3br")
+sources/0 = SubResource("TileSetScenesCollectionSource_odpu1")
+
+[sub_resource type="SystemFont" id="SystemFont_67e08"]
+subpixel_positioning = 0
+
+[sub_resource type="Theme" id="Theme_0bngh"]
+default_font = SubResource("SystemFont_67e08")
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_ni06f")
+star_frequence = 1.1
+star_frequence2 = 0.105
+random = 0.95
+
+[node name="Grid" type="TileMap" parent="."]
+show_behind_parent = true
+z_index = 2
+tile_set = SubResource("TileSet_byslw")
+format = 2
+layer_1/name = ""
+layer_1/enabled = true
+layer_1/modulate = Color(1, 1, 1, 1)
+layer_1/y_sort_enabled = false
+layer_1/y_sort_origin = 0
+layer_1/z_index = 0
+layer_1/tile_data = PackedInt32Array()
+script = ExtResource("3_dku4a")
+
+[node name="HexGrid" type="TileMap" parent="."]
+show_behind_parent = true
+z_index = 2
+tile_set = SubResource("TileSet_byslw")
+format = 2
+layer_1/name = ""
+layer_1/enabled = true
+layer_1/modulate = Color(1, 1, 1, 1)
+layer_1/y_sort_enabled = false
+layer_1/y_sort_origin = 0
+layer_1/z_index = 0
+layer_1/tile_data = PackedInt32Array()
+script = ExtResource("4_a4ehw")
+
+[node name="GenerateStars" type="TileMap" parent="."]
+z_index = 2
+tile_set = SubResource("TileSet_4xqhi")
+format = 2
+layer_1/name = ""
+layer_1/enabled = true
+layer_1/modulate = Color(1, 1, 1, 1)
+layer_1/y_sort_enabled = false
+layer_1/y_sort_origin = 0
+layer_1/z_index = 0
+layer_1/tile_data = PackedInt32Array()
+
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource("7_w41by")
+
+[node name="Control" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1293.0
+offset_right = -0.145996
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 5.146
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="ColorRect2" type="ColorRect" parent="UI/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0.0980392, 0.105882, 0.152941, 1)
+
+[node name="Coordinates" type="RichTextLabel" parent="UI/Control/VBoxContainer/ColorRect2"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 8.0
+offset_top = 5.0
+offset_right = -8.0
+offset_bottom = 29.0
+grow_horizontal = 2
+theme = SubResource("Theme_0bngh")
+text = "STAR COORDINATES X:  Y:"
+
+[node name="Box_X" type="SpinBox" parent="UI/Control/VBoxContainer/ColorRect2"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 34.0
+offset_right = 157.0
+offset_bottom = 65.0
+min_value = -100000.0
+max_value = 100000.0
+prefix = "X: "
+
+[node name="Box_Y" type="SpinBox" parent="UI/Control/VBoxContainer/ColorRect2"]
+layout_mode = 0
+offset_left = 162.0
+offset_top = 33.0
+offset_right = 301.0
+offset_bottom = 64.0
+min_value = -100000.0
+max_value = 100000.0
+prefix = "Y:"
+custom_arrow_step = 1.0
+
+[node name="StarName" type="RichTextLabel" parent="UI/Control/VBoxContainer/ColorRect2"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 74.0
+offset_right = 192.0
+offset_bottom = 97.0
+text = "Star Name:"
+
+[node name="FPS" type="Label" parent="UI/Control"]
+layout_mode = 0
+offset_left = -1278.0
+offset_top = 15.0
+offset_right = -994.0
+offset_bottom = 70.0
+theme_override_font_sizes/font_size = 30
+text = "FPS"
+script = ExtResource("8_oseog")
+
+[node name="MainCamera" type="Camera2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("9_2bub4")
+
+[connection signal="value_changed" from="UI/Control/VBoxContainer/ColorRect2/Box_X" to="." method="_on_box_x_value_changed"]
+[connection signal="value_changed" from="UI/Control/VBoxContainer/ColorRect2/Box_Y" to="." method="_on_box_y_value_changed"]

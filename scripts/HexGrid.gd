@@ -19,10 +19,6 @@ var resolution = 4
 
 var cells_width: int = 56
 var cells_height: int = 39
-var cells_offset_x: int = -17
-var cells_offset_y: int = -8
-
-var last_cam_pos: Vector2i
 
 ################################################################################
 # Draw hex grid lines variables
@@ -50,7 +46,7 @@ func _draw():
 	for i in cells_width:
 		for j in cells_height:
 			tile_position = Vector2(
-				cam_x + i + cells_offset_x, cam_y + j + cells_offset_y)
+				cam_x + i, cam_y + j)
 			
 			draw_hex_grid(grid_width, grid_color)
 
